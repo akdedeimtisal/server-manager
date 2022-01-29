@@ -9,11 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collection;
+import java.util.Random;
 
 import static io.getarrays.server.enumeration.Status.SERVER_DOWN;
 import static io.getarrays.server.enumeration.Status.SERVER_UP;
@@ -33,13 +35,15 @@ public class ServerServiceImpl implements ServerService {
     }
 
     private String setServerImageUrl() {
-        return null;
+        String[] imageNames = { "server.png", "server2.jpg", "server3.jpg", "server4.png"};
+
+        return ServletUriComponentsBuilder.fromCurrentContextPath().path("/image" + imageNames[new Random().nextInt(4)]).toUriString();
     }
 
     @Override
     public Server ping(String ipAddress) throws IOException {
         log.info("Pinging Server IP:: {}", ipAddress);
-        Server server = serverRepo.findByIpAdddress(ipAddress);
+        Server server = serverRepo.findByIpAddress(ipAddress);
         InetAddress address = InetAddress.getByName(ipAddress);
         server.setStatus(address.isReachable(10000) ? SERVER_UP : SERVER_DOWN);
         serverRepo.save(server);
