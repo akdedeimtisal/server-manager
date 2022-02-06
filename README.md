@@ -1,12 +1,15 @@
-###Get First 30 Records from DB
+Get First 30 Records from DB
 request **GET**
 `http://localhost:8080/server/list`
 
-###Get Records with ID
+
+Get Records with ID
 request **GET** 
 `http://localhost:8080/server/get/2`
 
-###Save Server on DB
+
+
+Save Server on DB
 request **POST** 
 `http://localhost:8080/server/save
 ` {
